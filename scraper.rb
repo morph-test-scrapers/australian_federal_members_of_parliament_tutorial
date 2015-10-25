@@ -6,17 +6,19 @@ require 'mechanize'
 
 agent = Mechanize.new
 
-# Read in a page
-page = agent.get("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&sen=1&par=-1&gen=0&ps=100&st=1&page=1")
+["1", "2", "3"].each do |page_number|
+  # Read in a page
+  page = agent.get("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&sen=1&par=-1&gen=0&ps=100&st=1&page=" + page_number)
 
-people = page.at("ul.search-filter-results").search("li")
+  people = page.at("ul.search-filter-results").search("li")
 
-people.each do |person|
-  name = person.at(".title").text
-  image_url = person.at("img").attr("src")
+  people.each do |person|
+    name = person.at(".title").text
+    image_url = person.at("img").attr("src")
 
-  puts "Saving person: #{name}"
-  ScraperWiki.save_sqlite(["name"], {"name" => name, "image_url" => image_url})
+    puts "Saving person: #{name}"
+    ScraperWiki.save_sqlite(["name"], {"name" => name, "image_url" => image_url})
+  end
 end
 
 # # An arbitrary query against the database
