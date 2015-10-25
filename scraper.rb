@@ -15,7 +15,7 @@ agent = Mechanize.new
   people.each do |person|
     name = person.at(".title").text
     image_url = person.at("img").attr("src")
-    party = person.search("dt").find { |dt| dt.text == "Party" }.next.text
+    party = person.search("dd")[-2].text
 
     puts "Saving person: #{name}"
     ScraperWiki.save_sqlite(["name"], {"name" => name, "image_url" => image_url, "party" => party})
