@@ -9,15 +9,15 @@ agent = Mechanize.new
 # Read in a page
 page = agent.get("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=")
 
-# Find somehing on the page using css selectors
-page.at("ul.search-filter-results").search("li").each do |person|
+people = page.at("ul.search-filter-results").search("li")
+
+people.each do |person|
   name = person.at(".title").text
+  image_url = person.at("img").attr("src")
 
-  p name
+  puts "Saving person: #{name}"
+  ScraperWiki.save_sqlite(["name"], {"name" => name, "image_url" => image_url})
 end
-
-# # Write out to the sqlite database using scraperwiki library
-# ScraperWiki.save_sqlite(["name"], {"name" => "susan", "occupation" => "software developer"})
 
 # # An arbitrary query against the database
 # ScraperWiki.select("* from data where 'name'='peter'")
