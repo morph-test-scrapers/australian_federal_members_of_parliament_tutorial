@@ -18,7 +18,7 @@ agent = Mechanize.new
     party = person.search("dd")[-2].text
 
     puts "Saving person: #{name}"
-    ScraperWiki.save_sqlite(["name"], {"name" => name, "image_url" => image_url, "party" => party})
+    ScraperWiki.save_sqlite([:name], {name: name, image_url: image_url, party: party})
   end
 end
 
