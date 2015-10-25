@@ -7,7 +7,7 @@ require 'mechanize'
 agent = Mechanize.new
 
 # Read in a page
-page = agent.get("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=")
+page = agent.get("http://www.aph.gov.au/Senators_and_Members/Parliamentarian_Search_Results?q=&mem=1&sen=1&par=-1&gen=0&ps=100&st=1&page=1")
 
 people = page.at("ul.search-filter-results").search("li")
 
